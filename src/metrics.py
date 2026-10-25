@@ -31,3 +31,12 @@ def max_drawdown(returns):
     drawdown = (cumulative - peak) / peak
     max_dd = drawdown.min()
     return max_dd
+
+def drawdown_series(returns):
+    """Day-by-day drawdown from running peak, as negative decimals."""
+    returns = returns.dropna()
+    cumulative = (1 + returns).cumprod()
+    peak = cumulative.cummax()
+    drawdown = (cumulative - peak) / peak
+    return drawdown
+
