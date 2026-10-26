@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 def cagr(returns, periods_per_year=252):
     """Compound annual growth rate of a daily return series, as a decimal (0.10 = 10%)."""
@@ -40,3 +41,12 @@ def drawdown_series(returns):
     drawdown = (cumulative - peak) / peak
     return drawdown
 
+def summary(returns, periods_per_year=252):
+    """Return CAGR, volatility, Sharpe and max drawdown as a labelled Series."""
+    summary_stats = pd.Series({
+        "CAGR": cagr(returns, periods_per_year),
+        "Volatility": ann_vol(returns, periods_per_year),
+        "Sharpe": sharpe(returns, periods_per_year),
+        "Max Drawdown": max_drawdown(returns)
+    })
+    return summary_stats
